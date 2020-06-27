@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 // File tab2_page
@@ -13,7 +15,19 @@ class _Tab2PageState extends State<Tab2Page> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.blue,
-        child: Text("Tab2Page")
+        child: Center(child: InkWell(
+          onTap: ()async{
+            Socket socket;
+            try{
+              socket=await Socket.connect("8.8.4.4",53,timeout: Duration(seconds:10 ));
+              socket?.destroy();
+              print("ok");
+            }catch(e){
+              socket?.destroy();
+              print(e.message);
+            }
+          },
+            child: Text("Tab2Page")))
     );
   }
   @override
