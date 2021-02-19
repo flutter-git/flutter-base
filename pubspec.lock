@@ -334,7 +334,7 @@ packages:
   localizations:
     dependency: "direct main"
     description:
-      path: localizations
+      path: "lib/localizations"
       relative: true
     source: path
     version: "0.0.1"

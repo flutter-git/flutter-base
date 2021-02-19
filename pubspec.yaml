@@ -29,7 +29,7 @@ dependencies:
       url: https://github.com/flutter-git/common.git
       ref: master
   localizations:
-    path: ./localizations
+    path: ./lib/localizations
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -42,6 +42,11 @@ dev_dependencies:
     sdk: flutter
   json_serializable: ^3.5.0
   build_runner: ^1.10.2
+flutter_intl:
+  enabled: true
+  arb_dir: lib/localizations/lib/l10n # Optional. Sets the directory of your ARB resource files. Provided value should be a valid path on your system. Default: lib/l10n
+  output_dir: lib/localizations/lib/generated # Optional. Sets the directory of generated localization files. Provided value should be a valid path on your system. Default: lib/generated
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
