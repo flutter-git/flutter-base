@@ -1,13 +1,13 @@
 import 'package:common/core/base_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterbase/components/main/CustomBottomNavigationBarItem.dart';
-import 'package:flutterbase/generated/l10n.dart';
 import 'package:flutterbase/styles/colors.dart';
 import 'package:flutterbase/ui/tab1/tab1_page.dart';
 import 'package:flutterbase/ui/tab2/tab2_page.dart';
 import 'package:flutterbase/ui/tab3/tab3_page.dart';
 import 'package:flutterbase/ui/tab4/tab4_page.dart';
 import 'package:flutterbase/ui/tab5/tab5_page.dart';
+import 'package:localizations/generated/l10n.dart';
 
 // File main_app
 // @project flutter_base

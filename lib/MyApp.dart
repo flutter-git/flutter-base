@@ -2,11 +2,10 @@ import 'package:common/bloc/auth/auth_bloc.dart';
 import 'package:common/common.dart';
 import 'package:common/core/navigator_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutterbase/generated/AppLocale.dart';
-import 'package:flutterbase/generated/l10n.dart';
 import 'package:flutterbase/ui/login/login.dart';
 import 'package:flutterbase/ui/main_app.dart';
+import 'package:localizations/generated/AppLocale.dart';
+import 'package:localizations/generated/l10n.dart';
 
 // File MyApp
 // @project flutter_base
@@ -25,13 +24,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(primaryColor: Colors.white),
       title: "Learning",
       localizationsDelegates: [
-        S.delegate,
-        // You need to add them if you are using the material library.
-        // The material components usses this delegates to provide default
-        // localization
-        GlobalCupertinoLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
+          ...localizationsDelegates
       ],
       supportedLocales: S.delegate.supportedLocales,
       localeResolutionCallback: S.delegate.resolution(fallback: AppLocale.ENGLISH),

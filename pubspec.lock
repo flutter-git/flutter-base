@@ -151,9 +151,11 @@ packages:
   common:
     dependency: "direct main"
     description:
-      path: "/Volumes/Data/flutter/common"
-      relative: false
-    source: path
+      path: "."
+      ref: master
+      resolved-ref: "80737bc696b536a099791cb2d02ee597d34ed8ca"
+      url: "https://github.com/flutter-git/common.git"
+    source: git
     version: "0.0.1"
   convert:
     dependency: transitive
@@ -245,7 +247,7 @@ packages:
     source: hosted
     version: "4.0.0+4"
   flutter_localizations:
-    dependency: "direct main"
+    dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
@@ -301,13 +303,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.16.1"
-  intl_translation:
-    dependency: "direct dev"
-    description:
-      name: intl_translation
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.17.10+1"
   io:
     dependency: transitive
     description:
@@ -336,6 +331,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.5.1"
+  localizations:
+    dependency: "direct main"
+    description:
+      path: localizations
+      relative: true
+    source: path
+    version: "0.0.1"
   logging:
     dependency: transitive
     description:
@@ -434,13 +436,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.9.2"
-  petitparser:
-    dependency: transitive
-    description:
-      name: petitparser
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.1.0"
   platform:
     dependency: transitive
     description:

@@ -5,8 +5,9 @@ import 'package:flutterbase/MyApp.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final sharedSync = await shared;
   runApp(WrapMain(
-    sharedPreferences: await shared,
+    sharedPreferences: sharedSync,
     child: MyApp(),
   ));
 }

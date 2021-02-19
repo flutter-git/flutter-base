@@ -7,7 +7,7 @@ import 'package:flutterbase/components/login/ButtonLogin.dart';
 import 'package:flutterbase/components/login/InputLogin.dart';
 import 'package:flutterbase/repository/user/UserRepository.dart';
 import 'package:flutterbase/styles/colors.dart';
-import '../../generated/l10n.dart';
+import 'package:localizations/generated/l10n.dart';
 
 // File login
 // @project flutter_base

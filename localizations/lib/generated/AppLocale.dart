@@ -3,6 +3,7 @@
 // @author minhhoang on 05-12-2019
 import 'package:common/common.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'l10n.dart';
 
@@ -87,3 +88,13 @@ extension AppLocale on AppLocalizationDelegate {
     return false;
   }
 }
+
+final localizationsDelegates = [
+  S.delegate,
+  // You need to add them if you are using the material library.
+  // The material components usses this delegates to provide default
+  // localization
+  GlobalCupertinoLocalizations.delegate,
+  GlobalMaterialLocalizations.delegate,
+  GlobalWidgetsLocalizations.delegate,
+];

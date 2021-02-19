@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutterbase/generated/l10n.dart';
 import 'package:flutterbase/styles/colors.dart';
+import 'package:localizations/generated/l10n.dart';
 
 // File ButtonLogin
 // @project learning
