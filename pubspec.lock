@@ -151,8 +151,8 @@ packages:
   common:
     dependency: "direct main"
     description:
-      path: common
-      relative: true
+      path: "/Volumes/Data/flutter/common"
+      relative: false
     source: path
     version: "0.0.1"
   convert:
