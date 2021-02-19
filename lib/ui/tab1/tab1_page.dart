@@ -1,6 +1,5 @@
+import 'package:common/core/navigator_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterbase/base/base_container.dart';
-import 'package:flutterbase/base/navigator_manager.dart';
 import 'package:flutterbase/ui/tab1/tab1_demo.dart';
 
 // File tab1_page

@@ -7,6 +7,7 @@ class BaseWidget extends StatefulWidget {
   final Widget buildTitle;
   final Widget buildBackAppBar;
   final Color colorWidget;
+  final Color colorIconBack;
   final Widget bottomNavigationBar;
   final Widget child;
   final Widget floatingActionButton;
@@ -17,6 +18,7 @@ class BaseWidget extends StatefulWidget {
   final FloatingActionButtonLocation floatingActionButtonLocation;
   final GlobalKey<ScaffoldState> keyScaffold;
   final double elevation;
+  final Widget appBar;
 
   const BaseWidget(
       {Key key,
@@ -34,7 +36,10 @@ class BaseWidget extends StatefulWidget {
       this.keyScaffold,
       this.bottomAppBar,
       this.brightness,
-      this.elevation, this.colorTitle})
+      this.elevation,
+      this.colorTitle,
+      this.colorIconBack,
+      this.appBar})
       : assert(child != null),
         super(key: key);
 
@@ -54,24 +59,27 @@ class _BaseWidgetState extends State<BaseWidget> {
               title: widget.buildTitle == null
                   ? Text(
                       widget.title,
-                      style: TextStyle(color: widget.colorTitle?? Colors.black),
+                      style:
+                          TextStyle(color: widget.colorTitle ?? Colors.white),
                     )
                   : widget.buildTitle,
               centerTitle: true,
               leading: ModalRoute.of(context).canPop
                   ? widget.buildBackAppBar == null
-                      ? BackAppBar(color: Colors.black,)
+                      ? BackAppBar(
+                          color: widget.colorIconBack ?? Colors.white,
+                        )
                       : widget.buildBackAppBar
                   : null,
               actions: widget.actions,
               brightness: widget.brightness,
               bottom: widget.bottomAppBar,
             )
-          : null,
+          : widget.appBar,
       body: Container(
         color: widget.colorWidget,
         constraints: BoxConstraints.expand(),
-        child: widget.child,
+        child: SafeArea(top: false, bottom: true, child: widget.child),
       ),
       bottomNavigationBar: widget.bottomNavigationBar,
       floatingActionButton: widget.floatingActionButton,
@@ -82,8 +90,9 @@ class _BaseWidgetState extends State<BaseWidget> {
 
 class BackAppBar extends StatelessWidget {
   final Color color;
+  final VoidCallback onPressed;
 
-  const BackAppBar({Key key, this.color}) : super(key: key);
+  const BackAppBar({Key key, this.color, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -94,8 +103,10 @@ class BackAppBar extends StatelessWidget {
           size: 30,
           color: color,
         ),
-        onPressed: () {
-          Navigator.of(context).pop();
-        });
+        onPressed: onPressed == null
+            ? () {
+                Navigator.of(context).pop();
+              }
+            : onPressed);
   }
 }

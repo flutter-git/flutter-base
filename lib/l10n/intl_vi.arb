@@ -1,0 +1,29 @@
+{
+  "@@locale": "vi",
+  "title": "Flutter Example App",
+  "@title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "login": "Đăng nhập",
+  "home": "Trang chủ",
+  "myLearning": "Việc học của tôi",
+  "recommended": "Đề nghị",
+  "more": "Thêm",
+  "username": "Tài khoản",
+  "password": "Mật khẩu",
+  "inputUsername": "Nhập tài khoản",
+  "inputPassword": "Nhập mật khẩu",
+  "pleaseInputUsername": "Vui lòng nhập tài khoản",
+  "pleaseInputPassword": "Vui lòng nhập mật khẩu",
+  "similarContent": "Nội dung tương tự",
+  "instructor": "Người hướng dẫn",
+  "course": "Khóa học",
+  "points": "points",
+  "overview": "Tổng quát",
+  "contents": "Nội dung",
+  "qa": "Q&A",
+  "learning": "Học tập",
+  "inProgress": "Đang trong khóa học:",
+  "seeAll": "Tất cả"
+}

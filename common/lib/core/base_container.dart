@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
+import 'package:provider/provider.dart';
 
 import 'navigator_manager.dart';
 
@@ -7,121 +10,125 @@ import 'navigator_manager.dart';
 // @project flutter_base
 // @author minhhoang on 25-06-2020
 
+typedef CustomNavigatorIndexBuilder = Widget Function(
+    BuildContext, int currentIndex);
+
 class CustomNavigatorTabBar extends StatefulWidget {
   final List<Widget> children;
-  final List<BottomNavigationBarItem> childrenBottomNavigator;
+  final CustomNavigatorIndexBuilder bottomNavigationBar;
   final num defaultIndex;
+  final Function initState;
+  final Function dispose;
 
   const CustomNavigatorTabBar(
       {Key key,
       @required this.children,
       this.defaultIndex = 0,
-      @required this.childrenBottomNavigator})
+      @required this.bottomNavigationBar,
+      this.initState,
+      this.dispose})
       : assert(children != null && children.length > 0),
-        assert(childrenBottomNavigator != null &&
-            childrenBottomNavigator.length == children.length),
         super(key: key);
 
   @override
-  _CustomNavigatorTabBarState createState() =>
-      _CustomNavigatorTabBarState();
+  _CustomNavigatorTabBarState createState() => _CustomNavigatorTabBarState();
 
   static _CustomNavigatorTabBarState of(BuildContext context) {
     return context
-        .dependOnInheritedWidgetOfExactType<
-            _StateCustomNavigatorTabBarApp>()
+        .dependOnInheritedWidgetOfExactType<_StateCustomNavigatorTabBarApp>()
         .data;
   }
 }
 
 class _CustomNavigatorTabBarState extends State<CustomNavigatorTabBar> {
   List<_BaseContainer> _children;
-  List<BottomNavigationBarItem> _childrenBottomNavigator;
-  num _currentIndex;
+  CustomNavigatorIndexBuilder _bottomNavigationBar;
+  ValueNotifier<int> _currentIndex;
   PageController _pageController;
   num _defaultIndex;
-  num _tapDouble=0;
+  num _tapDouble = 0;
 
-  num get getCurrentIndex => _currentIndex;
+  num get getCurrentIndex => _currentIndex.value;
 
   num get getDefaultIndex => _defaultIndex;
 
+  num get size => _children.length;
+
   set setCurrentIndex(num index) {
-    if(_currentIndex!=index)
-    setState(() {
-      _currentIndex = index;
+    if (_currentIndex.value != index) {
       _pageController.jumpToPage(index);
-      _tapDouble=0;
-    });else _tapDouble++;
-    if(_tapDouble>0){
+      _currentIndex.value = index;
+      _tapDouble = 0;
+    } else
+      _tapDouble++;
+    if (_tapDouble > 0) {
       NavigatorManager.actionPopUntil(index);
     }
   }
 
   @override
   void initState() {
+    if (widget.initState != null) widget.initState();
     NavigatorManager.navTabBar.clear();
     _defaultIndex = widget.defaultIndex;
+    _bottomNavigationBar = widget.bottomNavigationBar;
     _children = List.generate(widget.children.length, (index) {
       final keyNavigator = GlobalKey<NavigatorState>();
       final child = widget.children[index];
-      NavigatorManager.navTabBar[index]=keyNavigator;
-      return _BaseContainer(keyNavigator: keyNavigator, child: child,);
+      NavigatorManager.navTabBar[index] = keyNavigator;
+      return _BaseContainer(keyNavigator: keyNavigator, child: child);
     });
-    _currentIndex = _defaultIndex;
-    _childrenBottomNavigator = widget.childrenBottomNavigator;
-    _pageController = PageController(initialPage: _currentIndex);
+    _currentIndex = ValueNotifier(_defaultIndex);
+    _pageController = PageController(initialPage: _currentIndex.value);
     super.initState();
   }
 
   @override
   void dispose() {
     _pageController.dispose();
+    if (widget.dispose != null) widget.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
     return _StateCustomNavigatorTabBarApp(
-      data: this,
-      child: Scaffold(
-        body: WillPopScope(
-          onWillPop: () async {
-            final navigatorCurrent = NavigatorManager.navTabBar[_currentIndex];
-            final navigatorState = navigatorCurrent.currentState;
-            final canPop = navigatorState.canPop();
-            if (canPop)
-              navigatorState.maybePop();
-            else {
-              if (_currentIndex == _defaultIndex)
-                alertDialogYesNo(context, "Bạn có muốn thoát app");
-              else
-                setCurrentIndex = _defaultIndex;
-            }
-            return false;
-          },
-          child: PageView(
-            physics: NeverScrollableScrollPhysics(),
-            controller: _pageController,
-            onPageChanged: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
-            children: _children,
+        data: this,
+        child: ChangeNotifierProvider(
+          create: (_) => _currentIndex,
+          child: Scaffold(
+            body: WillPopScope(
+              onWillPop: () async {
+                final navigatorCurrent =
+                    NavigatorManager.navTabBar[_currentIndex.value];
+                final navigatorState = navigatorCurrent.currentState;
+                final canPop = navigatorState.canPop();
+                if (canPop)
+                  navigatorState.maybePop();
+                else {
+                  if (_currentIndex.value == _defaultIndex)
+                    _alertDialogYesNo(context, "Bạn có muốn thoát app");
+                  else
+                    setCurrentIndex = _defaultIndex;
+                }
+                return false;
+              },
+              child: PageView(
+                physics: NeverScrollableScrollPhysics(),
+                controller: _pageController,
+                onPageChanged: (index) {
+                  _currentIndex.value = index;
+                },
+                children: _children,
+              ),
+            ),
+            bottomNavigationBar: Consumer<ValueNotifier<int>>(
+              builder: (BuildContext context, value, Widget child) {
+                return _bottomNavigationBar(context, value.value);
+              },
+            ),
           ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-            selectedItemColor: Colors.amber,
-            unselectedItemColor: Colors.black,
-            currentIndex: _currentIndex,
-            onTap: (index) {
-              setCurrentIndex = index;
-            },
-            items: _childrenBottomNavigator),
-      ),
-    );
+        ));
   }
 }
 
@@ -196,12 +203,21 @@ class _BaseContainerState extends State<_BaseContainer>
   bool get wantKeepAlive => _wantKeepAlive;
 }
 
-Future<bool> alertDialogYesNo(BuildContext context, dynamic message) async {
+class CustomNavigatorBarItem {
+  Widget select;
+  Widget unSelect;
+  Color backgroundColor;
+
+  CustomNavigatorBarItem(
+      {Key key, this.select, this.unSelect, this.backgroundColor});
+}
+
+Future<bool> _alertDialogYesNo(BuildContext context, dynamic message) async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   String appName = packageInfo.appName;
   return showDialog(
           context: context,
-          builder: (_) => AlertDialog(
+          builder: (builderContext) => AlertDialog(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15.0))),
                 contentPadding: EdgeInsets.only(top: 10.0),
@@ -234,7 +250,7 @@ Future<bool> alertDialogYesNo(BuildContext context, dynamic message) async {
                             flex: 1,
                             child: InkWell(
                               onTap: () {
-                                Navigator.pop(context, true);
+                                exit(0);
                               },
                               splashColor: Colors.transparent,
                               borderRadius: BorderRadius.only(
@@ -246,7 +262,7 @@ Future<bool> alertDialogYesNo(BuildContext context, dynamic message) async {
                                       bottomRight: Radius.circular(32.0)),
                                 ),
                                 child: Text(
-                                  "Đồng ý",
+                                  "Accept",
                                   style: TextStyle(color: Color(0xff007aff)),
                                   textAlign: TextAlign.center,
                                 ),
@@ -262,7 +278,7 @@ Future<bool> alertDialogYesNo(BuildContext context, dynamic message) async {
                             flex: 1,
                             child: InkWell(
                               onTap: () {
-                                Navigator.pop(context, false);
+                                Navigator.pop(builderContext, false);
                               },
                               splashColor: Colors.transparent,
                               borderRadius: BorderRadius.only(
@@ -276,7 +292,7 @@ Future<bool> alertDialogYesNo(BuildContext context, dynamic message) async {
                                   ),
                                 ),
                                 child: Text(
-                                  "Bỏ qua",
+                                  "Cancel",
                                   style: TextStyle(
                                       color: Color(0xff007aff),
                                       fontWeight: FontWeight.bold),

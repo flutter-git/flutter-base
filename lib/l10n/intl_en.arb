@@ -1,0 +1,29 @@
+{
+  "@@locale": "en",
+  "title": "Flutter Example App",
+  "@title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "login": "Sign In",
+  "home": "home",
+  "myLearning": "My Learning",
+  "recommended": "Recommended",
+  "more": "More",
+  "username": "Username",
+  "password": "Password",
+  "inputUsername": "Input username",
+  "inputPassword": "Input password",
+  "pleaseInputUsername": "Please input username",
+  "pleaseInputPassword": "Please input password",
+  "similarContent": "Similar content",
+  "instructor": "Instructor",
+  "course": "Course",
+  "points": "points",
+  "overview": "Overview",
+  "contents": "Contents",
+  "qa": "Q&A",
+  "learning": "Learning",
+  "inProgress": "In Progress",
+  "seeAll": "See All"
+}

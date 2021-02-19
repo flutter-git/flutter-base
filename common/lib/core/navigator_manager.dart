@@ -33,9 +33,9 @@ class NavigatorManager {
         .push(SlideLeftRoute(widget: widget, name: name));
   }
 
-  static Future pushFullScreen(BuildContext context, Widget widget,{bool fullscreenDialog=false}) {
+  static Future pushFullScreen(BuildContext context, Widget widget,{bool fullscreenDialog=false,String name}) {
     return Navigator.of(context, rootNavigator: true)
-        .push(SlideLeftRoute(widget: widget,fullscreenDialog:fullscreenDialog ));
+        .push(SlideLeftRoute(widget: widget,fullscreenDialog:fullscreenDialog,name: name ));
   }
 
   static Future pushRemoveUntil(BuildContext context, Widget widget) {
