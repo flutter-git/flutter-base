@@ -13,8 +13,4 @@ class UserRepository with ApiManagerMixin {
   UserRepository._internal();
 
   factory UserRepository() => _singleton;
-
-  Future login(username, password) {
-    return apiProvider.get("wp/v2/users/me", headers: {HttpHeaders.authorizationHeader: "Basic ${base64Encode(utf8.encode('$username:$password'))}"});
-  }
 }

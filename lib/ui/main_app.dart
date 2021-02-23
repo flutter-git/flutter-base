@@ -39,9 +39,11 @@ class _MainAppState extends State<MainApp> {
                 CustomNavigatorTabBar.of(context).setCurrentIndex = index;
               },
               items: [
-                CustomBottomNavigationBarItem(S.current.myLearning, "ic_book"),
-                CustomBottomNavigationBarItem(S.current.recommended, "ic_new"),
-                CustomBottomNavigationBarItem(S.current.more, "ic_more"),
+                CustomBottomNavigationBarItem("Tab1", "ic_book"),
+                CustomBottomNavigationBarItem("Tab2", "ic_new"),
+                CustomBottomNavigationBarItem("Tab3", "ic_more"),
+                CustomBottomNavigationBarItem("Tab4", "ic_more"),
+                CustomBottomNavigationBarItem("Tab5", "ic_more"),
               ]);
         });
   }

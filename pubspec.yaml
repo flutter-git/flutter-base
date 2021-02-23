@@ -24,10 +24,10 @@ dependencies:
   flutter:
     sdk: flutter
   common:
-#    path: /Volumes/Data/flutter/common
-    git:
-      url: https://github.com/flutter-git/common.git
-      ref: master
+    path: /Volumes/Data/flutter/common
+#    git:
+#      url: https://github.com/flutter-git/common.git
+#      ref: master
   localizations:
     path: ./lib/localizations
 

@@ -1,9 +1,9 @@
 // File AppLocale
 // * @project back_office
 // @author minhhoang on 05-12-2019
-import 'package:common/common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'l10n.dart';
 
@@ -13,6 +13,12 @@ var language;
 extension AppLocale on AppLocalizationDelegate {
   static const ENGLISH = Locale("en", "");
   static const VIETNAM = Locale("vi", "");
+
+  static SharedPreferences _shared;
+  Future<SharedPreferences> get shared async{
+    if(AppLocale._shared == null) AppLocale._shared = await SharedPreferences.getInstance();
+    return AppLocale._shared;
+  }
 
   loadAndSave(Locale locale) {
     this.load(locale);

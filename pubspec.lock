@@ -151,11 +151,9 @@ packages:
   common:
     dependency: "direct main"
     description:
-      path: "."
-      ref: master
-      resolved-ref: "80737bc696b536a099791cb2d02ee597d34ed8ca"
-      url: "https://github.com/flutter-git/common.git"
-    source: git
+      path: "/Volumes/Data/flutter/common"
+      relative: false
+    source: path
     version: "0.0.1"
   convert:
     dependency: transitive

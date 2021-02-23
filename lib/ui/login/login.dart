@@ -81,13 +81,8 @@ class _LoginState extends State<Login> {
                     setMessage(S.current.pleaseInputPassword);
                     return;
                   }
-                  UserRepository().login(_userController.text, _passwordController.text).then((value) {
-                    BlocProvider.of<AuthBloc>(context).add(AuthLogin(
-                        user: {"username": "${_userController.text}", "password": "${_passwordController.text}", "id": value["id"], "data": value}));
-                  }).catchError((e) {
-                    print(e);
-                    setMessage(e);
-                  });
+                  BlocProvider.of<AuthBloc>(context).add(AuthLogin(
+                      auth: {}));
                 },
               )
             ],
