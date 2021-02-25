@@ -1,3 +1,4 @@
+import 'package:common/core/navigator_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterbase/ui/tab5/tab5_demo.dart';
 
@@ -14,24 +15,19 @@ class _Tab5PageState extends State<Tab5Page> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        color: Colors.amber,
+          color: Colors.amber,
           child: InkWell(
-            onTap: (){
-              Navigator.of(context)
-                  .push(MaterialPageRoute(
-                  settings: RouteSettings(name: "tab5"),
-                  builder: (BuildContext context) {
-                return Tab5Demo();
-              }));
+            onTap: () {
+              NavigatorManager.push(context, Tab5Demo());
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text("Tab5Page"),
             ),
-          )
-      ),
+          )),
     );
   }
+
   @override
   void initState() {
     print("Tab5Page: initState");
@@ -49,6 +45,7 @@ class _Tab5PageState extends State<Tab5Page> {
     print("Tab5Page: didUpdateWidget");
     super.didUpdateWidget(oldWidget);
   }
+
   @override
   void dispose() {
     print("Tab5Page: dispose");

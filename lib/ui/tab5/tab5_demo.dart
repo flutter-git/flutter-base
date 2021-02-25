@@ -1,3 +1,4 @@
+import 'package:common/core/navigator_manager.dart';
 import 'package:flutter/material.dart';
 
 // File tab5_demo
@@ -16,10 +17,7 @@ class _Tab5DemoState extends State<Tab5Demo> {
           child: Center(
             child: InkWell(
               onTap: (){
-                Navigator.of(context,)
-                    .push(MaterialPageRoute(builder: (BuildContext context) {
-                  return Tab5Demo();
-                }));
+                NavigatorManager.push(context, Tab5Demo());
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
