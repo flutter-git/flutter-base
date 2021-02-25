@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:common/bloc/auth/auth_bloc.dart';
+import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -12,17 +14,25 @@ class Tab3Page extends StatefulWidget {
 }
 
 class _Tab3PageState extends State<Tab3Page> {
-  final Completer<WebViewController> _controller=Completer<WebViewController>();
+  final Completer<WebViewController> _controller =
+      Completer<WebViewController>();
+
   @override
   Widget build(BuildContext context) {
-    return  WebView(
-      initialUrl: "http://hoangcongcar.com/",
-      javascriptMode: JavascriptMode.unrestricted,
-      onWebViewCreated: (webViewController){
-        _controller.complete(webViewController);
-      },
+    return Center(
+      child: InkWell(
+        onTap: () {
+          BlocProvider.of<AuthBloc>(context).add(AuthLogout());
+        },
+        child: Container(
+          color: Colors.blue,
+          padding: EdgeInsets.all(10),
+          child: Text("Logout"),
+        ),
+      ),
     );
   }
+
   @override
   void initState() {
     print("Tab3Page: initState");
@@ -40,6 +50,7 @@ class _Tab3PageState extends State<Tab3Page> {
     print("Tab3Page: didUpdateWidget");
     super.didUpdateWidget(oldWidget);
   }
+
   @override
   void dispose() {
     print("Tab3Page: dispose");
